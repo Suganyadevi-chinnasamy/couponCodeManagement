@@ -1,0 +1,78 @@
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">S.No</th>
+                <th scope="col">User Name</th>
+                <!-- <th scope="col">User Type</th> -->
+                <th scope="col">Email Address</th>
+                <th scope="col">Phone number</th>
+                <th scope="col">Address</th>
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let users of userDetails;let i = index;">
+                <td>{{ i+1 }}</td>
+                <td>{{ users.user_name }}</td>
+                <td>{{ users.email_id }}</td>
+                <td>{{ users.contact_no }}</td>
+                <td>{{ users.address }}</td>
+                <td>
+                    <div class="addCoupon" (click)="addCoupon(users)" data-toggle="modal" data-target="#addCouponModal">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i> 
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="modal fade" id="addCouponModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Coupon</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- <form> -->
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Select Coupon</label>
+                        <select class="form-control" [(ngModel)]="couponId">
+                            <option *ngFor="let coupon of couponDetails;let x = index" [ngValue]="coupon.id">{{
+                                coupon.coupon_name }}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Select Store</label>
+                        <select class="form-control" [(ngModel)]="storeId">
+                            <option *ngFor="let store of storeDetails;let x = index" [ngValue]="store.id">{{ store.store_name }}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Select Product</label>
+                        <select class="form-control" [(ngModel)]="productid">
+                            <option *ngFor="let product of productData;let x = index" [ngValue]="product.id">{{ product.product_name }}</option>
+                        </select>
+                    </div>
+                    <!-- <div class="form-group">
+                        <label for="exampleFormControlSelect1">Select Coupon</label>
+                        <select class="form-control">
+                            <option>Select store</option>
+                            <option value="1">Store 1</option>
+                            <option value="0">Store 2</option>
+                        </select>
+                    </div> -->
+                    <!-- </form> -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="addCouponProd()">Add Store</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

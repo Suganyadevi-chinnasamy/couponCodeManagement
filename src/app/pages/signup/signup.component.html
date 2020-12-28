@@ -1,0 +1,48 @@
+<div class="container">
+    <div class="registerDesign">
+        <h3>Sign Up</h3>
+        <!-- <form> -->
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">User Role</label>
+                <select class="form-control" [(ngModel)]="userRole">
+                    <option>Select User Role</option>
+                    <option value="1">Store Owner</option>
+                    <option value="0">User</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="name">User Name:</label>
+                <input type="text" class="form-control" [(ngModel)]="username" placeholder="Enter Username">
+            </div>
+            <div class="form-group">
+                <label for="name">Phone Number:</label>
+                <input type="number" maxlength="10" minlength="10" class="form-control" [(ngModel)]="phonenumber" placeholder="Enter Phone Number">
+            </div>
+            <div class="form-group">
+                <label for="email">Email address:</label>
+                <input type="email" class="form-control" [(ngModel)]="ownerEmail" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+                <label for="storeName">Store Name:</label>
+                <input type="text" class="form-control" [(ngModel)]="storeName" placeholder="Enter Store Name">
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Store Address:</label>
+                <textarea class="form-control" [(ngModel)]="address" placeholder="Enter Store Address" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="name">Store Phone Number:</label>
+                <input type="number" maxlength="10" minlength="10" [(ngModel)]="storePhonenumber" class="form-control" placeholder="Enter Store Phone Number">
+            </div>
+            <div class="form-group">
+                <label for="pwd">Password:</label>
+                <input type="password" class="form-control" [(ngModel)]="password" placeholder="Enter password">
+            </div>
+
+            <button type="submit" class="btn btn-primary" (click)="register()">Signup</button>
+        <!-- </form> -->
+        <br>
+        <br>
+        <p>Already have an account ? <b (click)="signIn()">Please Login</b></p>
+    </div>
+</div>

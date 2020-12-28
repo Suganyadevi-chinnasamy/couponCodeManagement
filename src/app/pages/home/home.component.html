@@ -1,0 +1,314 @@
+<div class="container">
+    <div class="title">
+        <div class="row">
+            <div class="col-md-6">
+                <h5>Dashboard</h5>
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-primary" (click)="addStore()" data-toggle="modal" data-target="#addStoreModal">
+                    + Add Store</button>
+            </div>
+            <!-- <div class="col-md-2">
+                <button type="button" class="btn btn-primary" (click)="usedCoupon()" data-toggle="modal" data-target="#usedCoupons">
+                    Used Coupons</button>
+            </div> -->
+            <div class="col-md-4">
+                <div class="form-group">
+                    <!-- <label for="exampleFormControlSelect1">Select Store</label> -->
+                    <select class="form-control">
+                        <option>Select store</option>
+                        <option value="1">Store 1</option>
+                        <option value="0">Store 2</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm">
+            <div class="couponType">
+                <h5>Active Coupons</h5>
+                <p>0</p>
+            </div>
+        </div>
+        <div class="col-sm">
+            <div class="couponType">
+                <h5>Inactive Coupons</h5>
+                <p>0</p>
+            </div>
+        </div>
+        <div class="col-sm">
+            <div class="couponType">
+                <h5>Futured Coupons</h5>
+                <p>0</p>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="main-content">
+        <div class="row">
+            <div class="col-sm">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                            aria-controls="home" aria-selected="true">Active Coupons</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+                            aria-selected="false">Expired Coupons</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-sm">
+                <div class="form-group has-search">
+                    <i class="fa fa-search iconSearch" aria-hidden="true"></i>
+                    <input type="text" class="form-control" placeholder="Search">
+                </div>
+            </div>
+            <div class="col-sm">
+                <button style="float:right;" class="btn btn-primary" data-toggle="modal" data-target="#addCouponModal"> + Add Coupon</button>
+            </div>
+        </div>
+        <br>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="couponTable">
+                    <table class="table">
+                        <thead style="font-size: 0.8em;">
+                            <tr>
+                                <th scope="col">S.No</th>
+                                <th scope="col">Coupon Code</th>
+                                <th scope="col">Offer Name</th>
+                                <th scope="col">Offer Type</th>
+                                <th scope="col">Product Name</th>
+                                <th scope="col">Product Price</th>
+                                <th scope="col">Discount Amount</th>
+                                <th scope="col">Minimum Amount</th>
+                                <th scope="col">Minimum Quantity</th>
+                                <th scope="col">Store Name</th>
+                                <th scope="col">Usage Limits</th>
+                                <th scope="col">Start Date</th>
+                                <th scope="col">End Date</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Info</th>
+                            </tr>
+                        </thead>
+                        <p *ngIf="this.activeCoupon.length == 0"> No Data Found.. </p>
+                        <tbody *ngIf="!noData" style="font-size: 0.8em;">
+                            <!-- <ng-container> -->
+                                <tr *ngFor="let coupon of activeCoupon;let i = index;">
+                                        <td>{{ i+1 }}</td>
+                                        <td>{{ coupon.coupon_code }}</td>
+                                        <td>{{ coupon.coupon_name }}</td>
+                                        <td>{{ coupon.discount_type }}</td>
+                                        <td>{{ coupon.product_name }}</td>
+                                        <td>{{ coupon.product_price }}</td>
+                                        <td>{{ coupon.discount_amount }}</td>
+                                        <td>{{ coupon.minimum_amount }}</td>
+                                        <td>{{ coupon.minimum_quantity }}</td>
+                                        <td>{{ coupon.store_name }}</td>
+                                        <td>{{ coupon.usage_limits }}</td>
+                                        <td>{{ coupon.val_start_date | date: 'dd-MM-yyyy' }}</td>
+                                        <td>{{ coupon.val_end_date | date: 'dd-MM-yyyy' }}</td>
+                                        <td>{{ coupon.active_status }}</td>
+                                        <td><i class="fa fa-eye" aria-hidden="true" (click)="usedCoupon()" data-toggle="modal" data-target="#usedCoupons"></i></td>
+                                </tr>
+                            <!-- </ng-container> -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="couponTable">
+                    <table class="table">
+                        <thead style="font-size: 0.8em;">
+                            <tr>
+                                <th scope="col">S.No</th>
+                                <th scope="col">Coupon Code</th>
+                                <th scope="col">Offer Name</th>
+                                <th scope="col">Offer Type</th>
+                                <th scope="col">Product Name</th>
+                                <th scope="col">Product Price</th>
+                                <th scope="col">Discount Amount</th>
+                                <th scope="col">Minimum Amount</th>
+                                <th scope="col">Minimum Quantity</th>
+                                <th scope="col">Store Name</th>
+                                <th scope="col">Usage Limits</th>
+                                <th scope="col">Start Date</th>
+                                <th scope="col">End Date</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Info</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody *ngIf="!noData" style="font-size: 0.8em;">
+                            <tr *ngIf="this.expiredCoupon.length == 0" style="text-align:center;"> <td>No Data Found..</td> </tr>
+                            <tr *ngFor="let excoupon of expiredCoupon;let i = index;"> 
+                                    <td>{{ i+1 }}</td>
+                                    <td>{{ excoupon.coupon_code }}</td>
+                                    <td>{{ excoupon.coupon_name }}</td>
+                                    <td>{{ excoupon.discount_type }}</td>
+                                    <td>{{ excoupon.product_name }}</td>
+                                    <td>{{ excoupon.product_price }}</td>
+                                    <td>{{ excoupon.discount_amount }}</td>
+                                    <td>{{ excoupon.minimum_amount }}</td>
+                                    <td>{{ excoupon.minimum_quantity }}</td>
+                                    <td>{{ excoupon.store_name }}</td>
+                                    <td>{{ excoupon.usage_limits }}</td>
+                                    <td>{{ excoupon.val_start_date | date: 'dd-MM-yyyy' }}</td>
+                                    <td>{{ excoupon.val_end_date | date: 'dd-MM-yyyy' }}</td>
+                                    <td>{{ excoupon.active_status }}</td>
+                                    <td><i class="fa fa-eye" aria-hidden="true" (click)="usedCoupon()" data-toggle="modal" data-target="#usedCoupons"></i></td>
+                                </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Form Modal -->
+    <div class="modal fade" id="addStoreModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Store</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- <form> -->
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Store Name:</label>
+                        <input type="text" class="form-control" [(ngModel)]="storeName">
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">Store Address:</label>
+                        <textarea class="form-control" [(ngModel)]="storeAddress"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">Store Phone Number:</label>
+                        <input type="number" class="form-control" [(ngModel)]="storePhoneNumber">
+                    </div>
+                    <!-- </form> -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="addNewStore()">Add Store</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="usedCoupons" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Coupon Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                   <p>Offer Name: Diwali Offer</p>
+                   <p>Coupon Code: DIW001</p>
+                   <p>Product Name: Twinbirds</p>
+                   <p>Coupon Discount: RS.200</p>
+                   <p>Product Price: RS.499</p>
+                   <p>Checkout Price: RS.299</p>
+                   <p>Usgae Limit: 3</p>
+                   <p>Used Date: 18-12-2020</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <!-- <button type="button" class="btn btn-primary" (click)="addNewStore()">Add Store</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addCouponModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Coupon</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- <form> -->
+                <!-- <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm">
+                            <label for="recipient-name" class="col-form-label">Coupon Code:</label>
+                        </div>
+                        <div class="col-sm">
+                            <a href="#"><p style="float:right;">Generate Coupon</p></a>
+                        </div>
+                    </div>
+                    <input type="text" class="form-control" [(ngModel)]="storeName">
+                </div> -->
+                <div class="form-group">
+                    <label for="message-text" class="col-form-label">Coupon Name:</label>
+                    <input type="text" class="form-control" [(ngModel)]="couponName">
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Discount Type</label>
+                    <select class="form-control" [(ngModel)]="discountType">
+                        <option value="flat">Fixed Amount</option>
+                        <option value="percentage">Percentage</option>
+                    </select>
+                </div>
+                <div class="form-group" *ngIf="this.discountType=='flat'">
+                    <label for="message-text" class="col-form-label">Discount Amount &#8377; :</label>
+                    <input type="text" class="form-control" [(ngModel)]="discountFlat">
+                </div>
+                <div class="form-group" *ngIf="this.discountType=='percentage'">
+                    <label for="message-text" class="col-form-label">Discount Percentage % :</label>
+                    <input type="text" class="form-control" [(ngModel)]="discountPercentage">
+                </div>
+                <label class="col-form-label">Minimum Purchase Requirements</label>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="inputEmail4" class="col-form-label">Minimum Amount</label>
+                      <input type="text" class="form-control" [(ngModel)]="miniAmount">
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="inputPassword4" class="col-form-label">Minimum Quantity</label>
+                      <input type="text" class="form-control" [(ngModel)]="miniQuantity">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="message-text" class="col-form-label">Usage Limit:</label>
+                    <input type="text" class="form-control" [(ngModel)]="usageLimit">
+                </div>
+                <!-- <div id="date-picker-example" class="md-form md-outline input-with-post-icon datepicker"> -->
+                <div class="form-group">
+                    <label for="message-text" class="col-form-label">Start Date:</label>
+                    <input placeholder="Select date" type="date" class="form-control" [(ngModel)]="startDate">
+                    <!-- <i class="fas fa-calendar input-prefix" tabindex=0></i> -->
+                </div>
+                <div class="form-group">
+                    <label for="message-text" class="col-form-label">End Date:</label>
+                    <input placeholder="Select date" type="date" class="form-control" [(ngModel)]="endDate">
+                    <!-- <i class="fas fa-calendar input-prefix" tabindex=0></i> -->
+                </div>
+                <!-- </div> -->
+                <!-- </form> -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="addCoupon()">Add Coupon</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>

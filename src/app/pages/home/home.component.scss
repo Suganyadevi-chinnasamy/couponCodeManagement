@@ -1,0 +1,54 @@
+.couponType{
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 1em;
+    margin: 0.5em;
+
+    h5{
+        font-size: 0.9em;
+    }
+}
+
+.title{
+    margin: 1em;
+}
+
+.has-search {
+    // width: 40%;
+    // margin-left: 30%;
+    // margin-right: 30%;
+    // position: relative;
+    // top: 7em;
+
+    .form-control {
+        // padding-left: 2.375rem;
+        // height: 3.5em;
+        // border-radius: 30px;
+        padding-left: 3em;
+        font-size: 1em;
+    }
+
+    .form-control-feedback {
+        position: absolute;
+        z-index: 2;
+        display: block;
+        width: 2.375rem;
+        height: 4.375rem;
+        line-height: 3.9rem;
+        text-align: center;
+        pointer-events: none;
+        color: #aaa;
+        padding-left: 1.5em;
+    }
+}
+
+.col-form-label{
+    font-size: 0.9em;
+}
+
+.iconSearch{
+    position: absolute;
+    top: 0.7em;
+    left: 1.5em;
+}
