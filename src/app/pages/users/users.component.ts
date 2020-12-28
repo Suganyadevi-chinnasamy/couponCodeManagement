@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiListService } from 'src/app/services/api-list.service';
 import { CommonService } from 'src/app/services/common.service';
+import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
   selector: 'app-users',
@@ -23,7 +24,8 @@ export class UsersComponent implements OnInit {
   
   constructor(
     public utils: ApiListService,
-    public commonservice: CommonService
+    public commonservice: CommonService,
+    public globalservice: GlobalService
   ) {
     let user = JSON.parse(localStorage.getItem('storeUserDetails'));
     this.userData = JSON.parse(user);
@@ -48,6 +50,8 @@ export class UsersComponent implements OnInit {
              // this.locations.push(this.allLocations[i].city.concat(',', this.allLocations[i].district));  
            // }
            // console.log("temp", this.locations);
+        }else if(resp.status_code == "400"){
+          this.globalservice.showError(resp.data);
         }
       });
   }
@@ -64,7 +68,9 @@ export class UsersComponent implements OnInit {
               // this.locations.push(this.allLocations[i].city.concat(',', this.allLocations[i].district));  
             // }
             // console.log("temp", this.locations);
-         }
+         }else if(resp.status_code == "400"){
+          this.globalservice.showError(resp.data);
+         }  
        });
   }
 
@@ -84,7 +90,7 @@ export class UsersComponent implements OnInit {
           console.log("couponDetails", this.couponDetails);
         }else if(resp.status_code == "400"){
           // this.spinner.hide();
-          // this.globalService.showError(resp.data);
+          this.globalservice.showError(resp.data);
           // console.log("data", resp.data);
         }
       })
@@ -101,7 +107,7 @@ export class UsersComponent implements OnInit {
           console.log("Store details", this.storeDetails);
         }else if(resp.status_code == "400"){
           // this.spinner.hide();
-          // this.globalService.showError(resp.data);
+          this.globalservice.showError(resp.data);
           // console.log("data", resp.data);
         }
       })
@@ -121,6 +127,9 @@ export class UsersComponent implements OnInit {
         console.log("product details", resp);
         if (resp.status_code == "200") {
            this.productData = resp.data;
+           this.globalservice.showSuccess("Coupon mapped successfully");
+        }else if(resp.status_code == "400"){
+          this.globalservice.showError(resp.data);
         }
       });
   }

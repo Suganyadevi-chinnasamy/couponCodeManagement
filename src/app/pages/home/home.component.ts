@@ -7,6 +7,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import * as moment from 'moment';
 import * as $ from 'jquery';
 import { DatePipe } from '@angular/common';
+import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
   selector: 'app-home',
@@ -44,7 +45,8 @@ export class HomeComponent implements OnInit {
     public commonservice:CommonService,
     public router: Router,
     private spinner: NgxSpinnerService,
-    public datepipe: DatePipe
+    public datepipe: DatePipe,
+    public globalService: GlobalService
   ) {
     let user = JSON.parse(localStorage.getItem('storeUserDetails'));
     this.userData = JSON.parse(user);
@@ -68,12 +70,12 @@ export class HomeComponent implements OnInit {
           this.storeId = this.storeDetails[0].id;
           this.getStoreCoupon(this.storeId);
           this.spinner.hide();
-          // this.globalService.showSuccess("Student Added Successfully");
+          // this.globalService.showSuccess(" Added Successfully");
           // this.display = "none";
           // this.studentForm.reset();
         }else if(resp.status_code == "400"){
           this.spinner.hide();
-          // this.globalService.showError(resp.data);
+          this.globalService.showError(resp.data);
           // console.log("data", resp.data);
         }
       })
@@ -116,6 +118,7 @@ export class HomeComponent implements OnInit {
           console.log("ActiveCoupon", this.activeCoupon);
         }else if(resp.status_code == "400"){
           this.spinner.hide();
+          this.globalService.showError(resp.data);
         }
       });
   }
@@ -143,12 +146,12 @@ export class HomeComponent implements OnInit {
           // this.router.navigate(['/home']);
           // console.log(resp);
           this.spinner.hide();
-          // this.globalService.showSuccess("Student Added Successfully");
+          this.globalService.showSuccess("Store Added Successfully");
           // this.display = "none";
           // this.studentForm.reset();
         }else if(resp.status_code == "400"){
           this.spinner.hide();
-          // this.globalService.showError(resp.data);
+          this.globalService.showError(resp.data);
           // console.log("data", resp.data);
         }
       });
@@ -187,8 +190,10 @@ export class HomeComponent implements OnInit {
         this.spinner.hide();
         if (resp.status_code == "200") {
           this.spinner.hide();
+          this.globalService.showSuccess("Coupon Added Successfully");
         }else if(resp.status_code == "400"){
           this.spinner.hide();
+          this.globalService.showError(resp.data);
         }
       });
   }
@@ -208,6 +213,7 @@ export class HomeComponent implements OnInit {
           this.spinner.hide();
         }else if(resp.status_code == "400"){
           this.spinner.hide();
+          this.globalService.showError(resp.data);
         }
       });
   }
