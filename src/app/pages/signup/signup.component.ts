@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonService } from 'src/app/services/common.service';
 import { ApiListService } from 'src/app/services/api-list.service';
+import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
   selector: 'app-signup',
@@ -22,7 +23,8 @@ export class SignupComponent implements OnInit {
   constructor(
     public router: Router,
     public commonservice: CommonService,
-    public utils: ApiListService
+    public utils: ApiListService,
+    public globalservice : GlobalService
   ) { }
 
   ngOnInit(): void {
@@ -51,12 +53,14 @@ export class SignupComponent implements OnInit {
         // this.spinner.hide();
         if (resp.status_code == "200") {
           this.router.navigate(["/home"]);
+          this.globalservice.showSuccess("User Registered Successfully");
           // console.log(resp);
           // this.spinner.hide();
           // this.globalService.showSuccess("Student Added Successfully");
           // this.display = "none";
           // this.studentForm.reset();
         }else if(resp.status_code == "400"){
+          this.globalservice.showError(resp.data);
         }
       });
   }

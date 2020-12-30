@@ -6,6 +6,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { SignupComponent } from './pages/signup/signup.component';
 import { ProductDetailsComponent } from './pages/product-details/product-details.component';
 import { UsersComponent } from './pages/users/users.component';
+import { AddCouponAllComponent } from './pages/add-coupon-all/add-coupon-all.component';
 
 const routes: Routes = [
   { 
@@ -22,6 +23,7 @@ const routes: Routes = [
       { path: 'home', component: HomeComponent },
       { path: 'product-details', component: ProductDetailsComponent },
       { path: 'userDetails', component: UsersComponent },
+      { path: 'couponAll', component: AddCouponAllComponent },
       // { path: 'register-hostel', component: RegisterHostelComponent },
       // { path: 'add-room', component: AddRoomsComponent },
     ]

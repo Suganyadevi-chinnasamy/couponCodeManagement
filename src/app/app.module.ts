@@ -22,6 +22,7 @@ import { ProductDetailsComponent } from './pages/product-details/product-details
 import { UsersComponent } from './pages/users/users.component';
 import { DatePipe } from '@angular/common';
 import { ToastrModule } from 'ngx-toastr';
+import { AddCouponAllComponent } from './pages/add-coupon-all/add-coupon-all.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { ToastrModule } from 'ngx-toastr';
     PageContentComponent,
     ProductDetailsComponent,
     UsersComponent,
+    AddCouponAllComponent,
   ],
   imports: [
     BrowserModule,

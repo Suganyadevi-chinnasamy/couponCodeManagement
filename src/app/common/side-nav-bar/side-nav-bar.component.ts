@@ -32,5 +32,8 @@ productDetails(){
 userDetails(){
   this.router.navigate(["/userDetails"]);
 }
+couponall(){
+  this.router.navigate(["/couponAll"]);
+}
 
 }
