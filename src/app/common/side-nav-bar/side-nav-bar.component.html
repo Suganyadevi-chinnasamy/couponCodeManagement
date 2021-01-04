@@ -6,6 +6,7 @@
         <a (click)="dashboard()" class="list-group-item list-group-item-action bg-light">Dashboard</a>
         <a (click)="productDetails()" class="list-group-item list-group-item-action bg-light">Products</a>
         <a (click)="userDetails()" class="list-group-item list-group-item-action bg-light">Users</a>
+        <a (click)="logOut()" class="list-group-item list-group-item-action bg-light">Logout</a>
         <!-- <a (click)="couponall()" class="list-group-item list-group-item-action bg-light">All</a> -->
    <!-- <a href="#" class="list-group-item list-group-item-action bg-light">Events</a>
         <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
@@ -50,3 +51,20 @@
     </div>
     <!-- /#page-content-wrapper -->
   </div>
+
+  <div class="backdrop" [ngStyle]="{'display':display}"></div>
+    <div class="modal" id="successModel" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <!-- <div class="modal-header">
+                </div> -->
+                <div class="dltmodal-content animate modal-body dltBl mb-3" style="text-align:center;">
+                    <p>Confirmation</p>
+                    <button type="submit" class="btn btn-success" (click)="ok()" style="width: 20%;">Yes</button>
+                    <button type="submit" class="btn btn-danger" (click)="onCloseHandled()" style="width: 20%;margin-left: 0.3em;">Cancel</button><br><br>
+                    <!-- <p class="error" *ngIf="showError">{{ErrorMsg}}</p> -->
+                </div>
+            </div>
+        </div>
+
+    </div>

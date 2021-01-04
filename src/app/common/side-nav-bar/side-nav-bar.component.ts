@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./side-nav-bar.component.scss']
 })
 export class SideNavBarComponent implements OnInit {
-
+  public display = "none";
   constructor(
     public router: Router
   ) { }
@@ -34,6 +34,18 @@ userDetails(){
 }
 couponall(){
   this.router.navigate(["/couponAll"]);
+}
+
+logOut(){
+  this.display = "block";
+}
+
+ok(){
+  this.router.navigate(["/login"]);
+}
+
+onCloseHandled(){
+  this.display = "none";
 }
 
 }

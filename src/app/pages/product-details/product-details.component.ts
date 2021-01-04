@@ -10,7 +10,7 @@ import { GlobalService } from 'src/app/services/global.service';
   styleUrls: ['./product-details.component.scss']
 })
 export class ProductDetailsComponent implements OnInit {
-
+  public display = "none";
   productData: any;
   userData: any;
   storeUserid: any;
@@ -19,6 +19,10 @@ export class ProductDetailsComponent implements OnInit {
   couponDetails: any;
   couponId: any;
   productId: any;
+  proName: any;
+  proCategory: any;
+  proPrice: any;
+  proQuantity: any;
 
   constructor(
     public utils: ApiListService,
@@ -28,45 +32,46 @@ export class ProductDetailsComponent implements OnInit {
     let user = JSON.parse(localStorage.getItem('storeUserDetails'));
     this.userData = JSON.parse(user);
     this.storeUserid = this.userData[0].user_id;
-   }
+  }
 
   ngOnInit(): void {
     this.getProductDetails();
   }
 
-  getProductDetails(){
+  getProductDetails() {
     const servicePath = this.utils.getApiConfigs('productDetails');
-     this.commonservice.invokeService(servicePath[0].method, servicePath[0].path, '')
-       .then((resp: any) => {
-         console.log("product details", resp);
-         if (resp.status_code == "200") {
-            this.productData = resp.data;
-          
-            // for(let i=0;i<this.allLocations.length;i++){
-              // this.locations.push(this.allLocations[i].city.concat(',', this.allLocations[i].district));  
-            // }
-            // console.log("temp", this.locations);
-         }else if(resp.status_code == "400"){
-           this.globalService.showError(resp.data);
-         }
-       });
+    this.commonservice.invokeService(servicePath[0].method, servicePath[0].path, '')
+      .then((resp: any) => {
+        console.log("product details", resp);
+        if (resp.status_code == "200") {
+          this.productData = resp.data;
+
+          // for(let i=0;i<this.allLocations.length;i++){
+          // this.locations.push(this.allLocations[i].city.concat(',', this.allLocations[i].district));  
+          // }
+          // console.log("temp", this.locations);
+        } else if (resp.status_code == "400") {
+          this.globalService.showError(resp.data);
+        }
+      });
   }
 
-  addCoupon(item){ 
+  addCoupon(item) {
     this.getCouponDetails();
     this.getStoreDetails();
     this.productId = item.id;
   }
 
-  getCouponDetails(){
+  getCouponDetails() {
     const servicePath = this.utils.getApiConfigs('getCoupon');
     this.commonservice.invokeService(servicePath[0].method, servicePath[0].path, '')
       .then((resp: any) => {
-        console.log("get coupon resp", resp);
+        // console.log("get coupon resp", resp);
         // this.spinner.hide();
         if (resp.status_code == "200") {
           this.couponDetails = resp.data;
-        }else if(resp.status_code == "400"){
+          console.log("coupon details", this.couponDetails);
+        } else if (resp.status_code == "400") {
           // this.spinner.hide();
           this.globalService.showError(resp.data);
           // console.log("data", resp.data);
@@ -74,7 +79,7 @@ export class ProductDetailsComponent implements OnInit {
       })
   }
 
-  getStoreDetails(){
+  getStoreDetails() {
     this.commonservice.getMethod(`store?user_id=${this.storeUserid}`, '')
       .then((resp: any) => {
         // console.log("Store Details resp", resp);
@@ -82,7 +87,7 @@ export class ProductDetailsComponent implements OnInit {
         if (resp.status_code == "200") {
           this.storeDetails = resp.data;
           console.log("id", this.storeDetails);
-        }else if(resp.status_code == "400"){
+        } else if (resp.status_code == "400") {
           // this.spinner.hide();
           this.globalService.showError(resp.data);
           // console.log("data", resp.data);
@@ -90,7 +95,7 @@ export class ProductDetailsComponent implements OnInit {
       })
   }
 
-  addCouponProd(){
+  addCouponProd() {
     let payload = {
       "coupon_id": this.couponId,
       "store_id": this.storeId,
@@ -102,12 +107,40 @@ export class ProductDetailsComponent implements OnInit {
       .then((resp: any) => {
         console.log("product details", resp);
         if (resp.status_code == "200") {
-           this.productData = resp.data;
-           this.globalService.showSuccess("Coupon mapped successfully");
-        }else if(resp.status_code == "400"){
+          this.productData = resp.data;
+          this.globalService.showSuccess("Coupon mapped successfully");
+        } else if (resp.status_code == "400") {
           this.globalService.showError(resp.data);
         }
       });
+  }
+
+  addNewProduct() {
+    let payload = {
+      "coupon_id": this.couponId,
+      "store_id": this.storeId,
+      "prod_id": this.productId
+    }
+    console.log("payload", payload);
+    const servicePath = this.utils.getApiConfigs('addcouponprod');
+    this.commonservice.invokeService(servicePath[0].method, servicePath[0].path, payload)
+      .then((resp: any) => {
+        console.log("product details", resp);
+        if (resp.status_code == "200") {
+          this.productData = resp.data;
+          this.globalService.showSuccess("Coupon mapped successfully");
+        } else if (resp.status_code == "400") {
+          this.globalService.showError(resp.data);
+        }
+      });
+  }
+
+  addProduct() {
+    this.display = "block";
+  }
+
+  onCloseHandled() {
+    this.display = "none";
   }
 
 

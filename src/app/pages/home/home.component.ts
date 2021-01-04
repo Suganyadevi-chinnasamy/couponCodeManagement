@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
   usedCoupons: any;
   discountPercentage: any;
   offerFor: any;
-  allAddedCoupon: any;
+  allAddedCoupon: any = [];
   addedWholeStore: any = [];
 
   // @ViewChild(BsDatepickerDirective, { static: false }) datepicker: BsDatepickerDirective;
@@ -61,6 +61,24 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCouponDetails();
+
+    // Get Dashboard Counts
+    // this.dashboardCounts();
+  }
+
+  dashboardCounts(){
+    const servicePath = this.utils.getApiConfigs('getCoupon');
+    this.commonservice.invokeService(servicePath[0].method, servicePath[0].path, '')
+      .then((resp: any) => {
+        console.log("Dashboard Resp", resp);
+        this.spinner.hide();
+        if (resp.status_code == "200") {
+
+        }else if(resp.status_code == "400"){
+          this.globalService.showError(resp.data);
+          // console.log("data", resp.data);
+        }
+      })
   }
 
   getCoupon(){
@@ -220,20 +238,20 @@ export class HomeComponent implements OnInit {
     }
 
     console.log("payload", payload);
-    const servicePath = this.utils.getApiConfigs('addCoupon');
-    console.log("service path", servicePath);
-    this.commonservice.invokeService(servicePath[0].method, servicePath[0].path, payload)
-      .then((resp: any) => {
-        console.log("add coupon resp", resp);
-        this.spinner.hide();
-        if (resp.status_code == "200") {
-          this.spinner.hide();
-          this.globalService.showSuccess("Coupon Added Successfully");
-        }else if(resp.status_code == "400"){
-          this.spinner.hide();
-          this.globalService.showError(resp.data);
-        }
-      });
+    // const servicePath = this.utils.getApiConfigs('addCoupon');
+    // console.log("service path", servicePath);
+    // this.commonservice.invokeService(servicePath[0].method, servicePath[0].path, payload)
+    //   .then((resp: any) => {
+    //     console.log("add coupon resp", resp);
+    //     this.spinner.hide();
+    //     if (resp.status_code == "200") {
+    //       this.spinner.hide();
+    //       this.globalService.showSuccess("Coupon Added Successfully");
+    //     }else if(resp.status_code == "400"){
+    //       this.spinner.hide();
+    //       this.globalService.showError(resp.data);
+    //     }
+    //   });
   }
 
   dateFormat(date) {
