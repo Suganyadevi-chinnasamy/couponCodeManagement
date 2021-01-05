@@ -55,6 +55,21 @@ export class ApiListService {
     'path': 'user',
     'method': 'POST' 
   },
+  {
+    'key': 'addProduct',
+    'path': 'product',
+    'method': 'POST' 
+  },
+  {
+    'key': 'couponforProduct',
+    'path': 'allproductcoupon',
+    'method': 'GET'
+  },
+  {
+    'key': 'couponforUsers',
+    'path': 'allusercoupon',
+    'method': 'GET'
+  }
   
 ]
 

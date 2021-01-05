@@ -21,6 +21,7 @@ export class UsersComponent implements OnInit {
   userDetails: any;
   userid: any;
   productid: any;
+  couponforuser: any;
   
   constructor(
     public utils: ApiListService,
@@ -36,6 +37,7 @@ export class UsersComponent implements OnInit {
   ngOnInit(): void {
     this.getUserDetails();
     this.getProductDetails();
+    this.getCouponforUsers();
   }
 
   getUserDetails(){
@@ -94,6 +96,19 @@ export class UsersComponent implements OnInit {
           // console.log("data", resp.data);
         }
       })
+  }
+
+  getCouponforUsers(){
+    const servicePath = this.utils.getApiConfigs('couponforUsers');
+    this.commonservice.invokeService(servicePath[0].method, servicePath[0].path, '')
+      .then((resp: any) => {
+        console.log("Coupon for User details", resp);
+        if (resp.status_code == "200") {
+          this.couponforuser = resp.data;
+        } else if (resp.status_code == "400") {
+          // this.globalService.showError(resp.data);
+        }
+      });
   }
 
   getStoreDetails(item){

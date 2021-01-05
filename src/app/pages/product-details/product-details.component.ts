@@ -23,6 +23,7 @@ export class ProductDetailsComponent implements OnInit {
   proCategory: any;
   proPrice: any;
   proQuantity: any;
+  couponforPro: any;
 
   constructor(
     public utils: ApiListService,
@@ -36,20 +37,29 @@ export class ProductDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProductDetails();
+    this.getCouponforProduct();
   }
 
   getProductDetails() {
     const servicePath = this.utils.getApiConfigs('productDetails');
     this.commonservice.invokeService(servicePath[0].method, servicePath[0].path, '')
       .then((resp: any) => {
-        console.log("product details", resp);
+        // console.log("product details", resp);
         if (resp.status_code == "200") {
           this.productData = resp.data;
+        } else if (resp.status_code == "400") {
+          this.globalService.showError(resp.data);
+        }
+      });
+  }
 
-          // for(let i=0;i<this.allLocations.length;i++){
-          // this.locations.push(this.allLocations[i].city.concat(',', this.allLocations[i].district));  
-          // }
-          // console.log("temp", this.locations);
+  getCouponforProduct(){
+    const servicePath = this.utils.getApiConfigs('couponforProduct');
+    this.commonservice.invokeService(servicePath[0].method, servicePath[0].path, '')
+      .then((resp: any) => {
+        console.log("Coupon for product details", resp);
+        if (resp.status_code == "200") {
+          this.couponforPro = resp.data;
         } else if (resp.status_code == "400") {
           this.globalService.showError(resp.data);
         }
@@ -117,12 +127,15 @@ export class ProductDetailsComponent implements OnInit {
 
   addNewProduct() {
     let payload = {
-      "coupon_id": this.couponId,
+      "product_name": this.proName,
+      "product_price": this.proPrice,
       "store_id": this.storeId,
-      "prod_id": this.productId
+      "prod_quantity":[{
+      "quantity": this.proQuantity
+      }]
     }
     console.log("payload", payload);
-    const servicePath = this.utils.getApiConfigs('addcouponprod');
+    const servicePath = this.utils.getApiConfigs('addProduct');
     this.commonservice.invokeService(servicePath[0].method, servicePath[0].path, payload)
       .then((resp: any) => {
         console.log("product details", resp);

@@ -44,7 +44,7 @@
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Select Coupon</label>
                         <select class="form-control" [(ngModel)]="couponId">
-                            <option *ngFor="let coupon of couponDetails;let x = index" [ngValue]="coupon.coupon_id">{{
+                            <option *ngFor="let coupon of couponforPro;let x = index" [ngValue]="coupon.coupon_id">{{
                                 coupon.coupon_name }}</option>
                         </select>
                     </div>
