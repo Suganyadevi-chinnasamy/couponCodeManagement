@@ -140,7 +140,7 @@ export class HomeComponent implements OnInit {
             if(currentDate <= end_date){
               item.active_status = "Active";
               this.activeCoupon.push(item);
-              console.log("length", this.activeCoupon.length);
+              // console.log("length", this.activeCoupon.length);
               if(this.activeCoupon.length == 0){
                 this.noData = true;
               }else{
@@ -209,8 +209,8 @@ export class HomeComponent implements OnInit {
       this.miniAmount = 0;
     }else if(this.discountFlat == undefined){
       this.discountFlat = 0;
-    }else if(this.discountPercentage == undefined){
-      this.discountPercentage = 0;
+    // }else if(this.discountPercentage == undefined){
+      // this.discountPercentage = 0;
     }
 
     let payload = {
@@ -222,7 +222,7 @@ export class HomeComponent implements OnInit {
       "usage_limits" : this.usageLimit,
       "val_start_date" : this.startDate,
       "val_end_date" : this.endDate,
-      "percentage" : this.discountPercentage,
+      // "percentage" : this.discountPercentage,
       "type" : this.offerFor, 
     }
 

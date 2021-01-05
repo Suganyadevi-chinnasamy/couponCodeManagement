@@ -11,7 +11,7 @@ import { GlobalService } from 'src/app/services/global.service';
 })
 export class ProductDetailsComponent implements OnInit {
   public display = "none";
-  productData: any;
+  productData: any = [];
   userData: any;
   storeUserid: any;
   storeDetails: any;
@@ -57,9 +57,10 @@ export class ProductDetailsComponent implements OnInit {
     const servicePath = this.utils.getApiConfigs('couponforProduct');
     this.commonservice.invokeService(servicePath[0].method, servicePath[0].path, '')
       .then((resp: any) => {
-        console.log("Coupon for product details", resp);
+        // console.log("Coupon for product details", resp);
         if (resp.status_code == "200") {
           this.couponforPro = resp.data;
+          console.log("coupon for products", this.couponforPro );
         } else if (resp.status_code == "400") {
           this.globalService.showError(resp.data);
         }
@@ -138,10 +139,10 @@ export class ProductDetailsComponent implements OnInit {
     const servicePath = this.utils.getApiConfigs('addProduct');
     this.commonservice.invokeService(servicePath[0].method, servicePath[0].path, payload)
       .then((resp: any) => {
-        console.log("product details", resp);
+        console.log("Added product details", resp);
         if (resp.status_code == "200") {
-          this.productData = resp.data;
-          this.globalService.showSuccess("Coupon mapped successfully");
+          this.productData.push(resp.data);
+          this.globalService.showSuccess("Product mapped successfully");
         } else if (resp.status_code == "400") {
           this.globalService.showError(resp.data);
         }
