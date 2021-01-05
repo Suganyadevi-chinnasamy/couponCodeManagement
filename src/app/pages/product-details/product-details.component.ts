@@ -38,6 +38,7 @@ export class ProductDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.getProductDetails();
     this.getCouponforProduct();
+    this.getStoreDetails();
   }
 
   getProductDetails() {
@@ -69,7 +70,6 @@ export class ProductDetailsComponent implements OnInit {
 
   addCoupon(item) {
     this.getCouponDetails();
-    this.getStoreDetails();
     this.productId = item.id;
   }
 
@@ -131,9 +131,7 @@ export class ProductDetailsComponent implements OnInit {
       "product_name": this.proName,
       "product_price": this.proPrice,
       "store_id": this.storeId,
-      "prod_quantity":[{
       "quantity": this.proQuantity
-      }]
     }
     console.log("payload", payload);
     const servicePath = this.utils.getApiConfigs('addProduct');
