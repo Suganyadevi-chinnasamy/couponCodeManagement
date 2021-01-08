@@ -1,13 +1,206 @@
-.loginDesign{
-    margin-left: 25%;
-    margin-right: 25%;
-    margin-top: 1em;
-    margin-bottom: 1em;
-    font-size: 0.8em;
-    border: 1px solid #ccc;
-    padding: 2em;
+.loginDesign {
+    // margin-left: 25%;
+    // margin-right: 25%;
+    // margin-top: 1em;
+    // margin-bottom: 1em;
+    // font-size: 0.8em;
+    // border: 1px solid #ccc;
+    // padding: 2em;
 
-    .form-control{
+    .form-control {
         font-size: 0.9em;
+    }
+}
+
+.container {
+    background: #fff;
+    margin-top: 6em;
+    // border-radius: 10px;
+    // padding: 0em;
+
+    .col-md-5 {
+        padding-right: 0px;
+        padding-left: 0px;
+
+
+        .leftLogin {
+            // background-image: url("../../../assets/login-left.png");
+            background-color: #a37af4;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            // border-radius: 10px 0px 0px 10px;
+            padding-bottom: 3em;
+            height: 100%;
+
+            .logo {
+                width: 80%;
+                padding: 7em 8em;
+            }
+
+            .leftTxt {
+                font-size: 0.8em;
+                text-align: justify;
+                padding: 1em 2em;
+                padding-bottom: 5em;
+                color: #fff;
+            }
+        }
+    }
+
+    .col-md-7 {
+        padding-right: 0px;
+        padding-left: 0px;
+        
+        .rightLogin {
+            padding-bottom: 3em;
+            padding-top: 3em;
+            background-color: azure;
+            height: 100%;
+
+            .form-group {
+                // padding-bottom: 1.2em;
+                padding: 0.5em 2em;
+            }
+
+            .btnLogin{
+                text-align: center;
+                margin-top: 3em;
+            }
+
+            .loginSubmit{
+                width: 80%;
+                border-radius: 20px;
+            }
+
+            .email-icon {
+                width: 20px;
+                float: left;
+                margin-top: 0.4em;
+                margin-left: 3em;
+            }
+
+            .form-control {
+                position: absolute;
+                padding-left: 4em;
+                background: transparent;
+                border-radius: 30px;
+                width: 80%;
+                font-size: 0.8em
+            }
+
+            .error-messages {
+                text-align: left;
+                padding-left: 2em;
+            }
+
+            h3 {
+                text-align: left;
+                font-size: 0.9em;
+                padding: 0.5em 2em;
+            }
+
+            p {
+                text-align: left;
+                font-size: 0.8em;
+                padding: 1em 2em;
+                color: #939393;
+            }
+
+            .btn-submit {
+                text-align: left;
+                margin-left: 1.6em;
+                padding-top: 1.2em;
+
+                .btn-primary {
+                    width: 89%;
+                    font-size: 0.8em;
+                    border-radius: 30px;
+                    background-color: #a37af4;
+                    border-color: #a37af4;
+                }
+            }
+        }
+    }
+}
+
+.form-control-sm {
+    height: calc(2.5em + 0.5rem + 2px);
+}
+
+img {
+    width: 120px;
+}
+
+.p-5 {
+    padding: 3em 1em !important;
+}
+
+.mb-3 {
+    margin-top: 1em;
+}
+
+.btn-sm {
+    padding: 0.60rem 0.5rem;
+}
+
+.submitbtn {
+    background: #a37af4 !important;
+    color: #fff;
+    font-weight: 700;
+}
+
+.col-form-label-sm {
+    color: #a37af4;
+    margin-bottom: 1em;
+}
+
+.error-messages {
+    font-size: 0.7em;
+    color: red;
+    font-weight: 100;
+}
+
+
+
+// MEDIA QUERIES \\
+@media screen and (min-width: 320px) {
+
+    .bg {
+        overflow: auto !important;
+    }
+
+    .logo {
+        width: 100% !important;
+        padding: 5em 6em !important;
+    }
+
+    .main-block {
+        padding: 1em !important;
+        padding-top: 1em !important;
+    }
+
+    .leftLogin {
+        // border-radius: 10px 10px 0px 0px !important;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .bg {
+        overflow: hidden !important;
+    }
+
+    .logo {
+        width: 80% !important;
+        padding: 7em 8em !important;
+    }
+
+    .leftLogin {
+        // border-radius: 10px 0px 0px 10px !important;
+    }
+
+    .main-block {
+        padding: 8em !important;
+        padding-top: 4em !important;
     }
 }

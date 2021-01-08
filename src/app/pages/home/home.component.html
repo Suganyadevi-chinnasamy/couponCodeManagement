@@ -5,7 +5,7 @@
                 <h5>Dashboard</h5>
             </div>
             <div class="col-md-2">
-                <button type="button" class="btn btn-primary" (click)="addStore()" data-toggle="modal" data-target="#addStoreModal">
+                <button type="button" class="btn btn-primary" (click)="addStore()">
                     + Add Store</button>
             </div>
             <!-- <div class="col-md-2">
@@ -55,9 +55,9 @@
                             aria-controls="home" aria-selected="true">All Coupons</a>
                     </li>
                     <li class="nav-item">
-                            <a class="nav-link" id="active-tab" data-toggle="tab" href="#active" role="tab"
-                                aria-controls="active" aria-selected="true">Active Coupons</a>
-                        </li>
+                        <a class="nav-link" id="active-tab" data-toggle="tab" href="#active" role="tab" aria-controls="active"
+                            aria-selected="true">Active Coupons</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
                             aria-selected="false">Expired Coupons</a>
@@ -75,7 +75,7 @@
                 </div>
             </div> -->
             <div class="col-md-4">
-                <button style="float:right;" class="btn btn-primary" data-toggle="modal" data-target="#addCouponModal">
+                <button style="float:right;" class="btn btn-primary" (click)="addCouponModal()">
                     + Add Coupon</button>
             </div>
         </div>
@@ -91,13 +91,9 @@
                                 <th scope="col">Offer Name</th>
                                 <th scope="col">Offer Type</th>
                                 <th scope="col">Coupon For</th>
-                                <th scope="col">Product Name</th>
-                                <th scope="col">Product Price</th>
                                 <th scope="col">Discount Amount</th>
                                 <th scope="col">Minimum Amount</th>
                                 <th scope="col">Minimum Quantity</th>
-                                <th scope="col">Store Name</th>
-                                <th scope="col">User Name</th>
                                 <th scope="col">Usage Limits</th>
                                 <th scope="col">Start Date</th>
                                 <th scope="col">End Date</th>
@@ -114,19 +110,28 @@
                                 <td>{{ coupon.coupon_name }}</td>
                                 <td>{{ coupon.discount_type }}</td>
                                 <td>{{ coupon.type }}</td>
-                                <td>{{ coupon.product_name }}</td>
-                                <td>{{ coupon.product_price }}</td>
                                 <td>{{ coupon.discount_amount }}</td>
                                 <td>{{ coupon.minimum_amount }}</td>
                                 <td>{{ coupon.minimum_quantity }}</td>
-                                <td>{{ coupon.store_name }}</td>
-                                <td>Name</td>
                                 <td>{{ coupon.usage_limits }}</td>
                                 <td>{{ coupon.val_start_date | date: 'dd-MM-yyyy' }}</td>
                                 <td>{{ coupon.val_end_date | date: 'dd-MM-yyyy' }}</td>
                                 <td>{{ coupon.active_status }}</td>
-                                <td><i class="fa fa-eye" aria-hidden="true" (click)="usedCoupon()" data-toggle="modal"
-                                        data-target="#usedCoupons"></i></td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-md">
+                                            <i class="fa fa-plus-circle statusIcon" aria-hidden="true"></i>
+                                            <i class="fa fa-ban statusIcon" aria-hidden="true" (click)="deactivateCouponModal()"></i>
+                                            <i class="fa fa-power-off statusIcon" aria-hidden="true" (click)="reactivateCouponModal()"></i>
+                                            <i class="fa fa-eye statusIcon" aria-hidden="true" (click)="usedCoupon()"
+                                                data-toggle="modal" data-target="#usedCoupons"></i>
+                                            <i class="fa fa-pencil-square-o statusIcon" aria-hidden="true" (click)="editCouponModal(coupon)"></i>
+                                        </div>
+                                        <!-- <div class="col-md">
+                                           
+                                        </div> -->
+                                    </div>
+                                </td>
                             </tr>
                             <!-- </ng-container> -->
                         </tbody>
@@ -277,43 +282,6 @@
         </div>
     </div>
 
-
-    <!-- Form Modal -->
-    <div class="modal fade" id="addStoreModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add Store</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <!-- <form> -->
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Store Name:</label>
-                        <input type="text" class="form-control" [(ngModel)]="storeName">
-                    </div>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">Store Address:</label>
-                        <textarea class="form-control" [(ngModel)]="storeAddress"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">Store Phone Number:</label>
-                        <input type="number" class="form-control" [(ngModel)]="storePhoneNumber">
-                    </div>
-                    <!-- </form> -->
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="addNewStore()">Add
-                        Store</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="modal fade" id="usedCoupons" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -341,93 +309,163 @@
             </div>
         </div>
     </div>
+</div>
 
-    <div class="modal fade" id="addCouponModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add Coupon</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+<div class="backdrop" [ngStyle]="{'display':display}"></div>
+<div class="modal" id="successModel" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" *ngIf="showAddStore">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Store</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="onCloseHandled()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- <form> -->
+                <div class="form-group">
+                    <label for="recipient-name" class="col-form-label">Store Name:</label>
+                    <input type="text" class="form-control" [(ngModel)]="storeName">
                 </div>
-                <div class="modal-body">
-                    <!-- <form> -->
-                    <!-- <div class="form-group">
+                <div class="form-group">
+                    <label for="message-text" class="col-form-label">Store Address:</label>
+                    <textarea class="form-control" [(ngModel)]="storeAddress"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="message-text" class="col-form-label">Store Phone Number:</label>
+                    <input type="number" class="form-control" [(ngModel)]="storePhoneNumber">
+                </div>
+                <!-- </form> -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="addNewStore()">Add
+                    Store</button>
+            </div>
+        </div>
+
+        <div class="modal-content" *ngIf="showAddCoupon">
+            <div class="modal-header" *ngIf="showAdd">
+                <h5 class="modal-title" id="exampleModalLabel">Add Coupon</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="onCloseHandled()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-header" *ngIf="showEdit">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Coupon</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="onCloseHandled()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- <form> -->
+                <div class="form-group">
                     <div class="row">
                         <div class="col-sm">
                             <label for="recipient-name" class="col-form-label">Coupon Code:</label>
                         </div>
                         <div class="col-sm">
-                            <a href="#"><p style="float:right;">Generate Coupon</p></a>
+                            <a href="#" (click)="generateCoupon()">
+                                <p style="float:right;">Generate Coupon</p>
+                            </a>
                         </div>
                     </div>
-                    <input type="text" class="form-control" [(ngModel)]="storeName">
-                </div> -->
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">Coupon Name:</label>
-                        <input type="text" class="form-control" [(ngModel)]="couponName">
+                    <input type="text" class="form-control" [(ngModel)]="couponCode">
+                </div>
+                <div class="form-group">
+                    <label for="message-text" class="col-form-label">Coupon Name:</label>
+                    <input type="text" class="form-control" [(ngModel)]="couponName">
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Discount Type</label>
+                    <select class="form-control" [(ngModel)]="discountType">
+                        <option value="flat">Fixed Amount</option>
+                        <option value="percentage">Percentage</option>
+                    </select>
+                </div>
+                <div class="form-group" *ngIf="this.discountType=='flat'">
+                    <label for="message-text" class="col-form-label">Discount
+                        Amount &#8377; :</label>
+                    <!-- <label for="message-text" class="col-form-label">Discount -->
+                    <!-- Percentage % :</label> -->
+                    <input type="text" class="form-control" [(ngModel)]="discountFlat">
+                </div>
+                <div class="form-group" *ngIf="this.discountType=='percentage'">
+                    <label for="message-text" class="col-form-label">Discount Percentage % :</label>
+                    <input type="text" class="form-control" [(ngModel)]="discountFlat">
+                </div>
+                <label class="col-form-label">Minimum Purchase Requirements</label>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4" class="col-form-label">Minimum Amount</label>
+                        <input type="text" class="form-control" [(ngModel)]="miniAmount">
                     </div>
-                    <div class="form-group">
-                        <label for="exampleFormControlSelect1">Discount Type</label>
-                        <select class="form-control" [(ngModel)]="discountType">
-                            <option value="flat">Fixed Amount</option>
-                            <option value="percentage">Percentage</option>
+                    <div class="form-group col-md-6">
+                        <label for="inputPassword4" class="col-form-label">Minimum Quantity</label>
+                        <input type="text" class="form-control" [(ngModel)]="miniQuantity">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Offer For</label>
+                    <select class="form-control" [(ngModel)]="offerFor">
+                        <option value="ALL">All</option>
+                        <option value="products">Products</option>
+                        <option value="users">Customers</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="message-text" class="col-form-label">Usage Limit:</label>
+                    <input type="text" class="form-control" [(ngModel)]="usageLimit">
+                </div>
+
+                <div class="form-group">
+                        <label for="exampleFormControlSelect1">Select Store:</label>
+                        <select class="form-control" [(ngModel)]="selStoreID">
+                            <option *ngFor="let store of storeDetails;let x = index" [ngValue]="store.id">{{
+                                    store.store_name }}</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label" *ngIf="this.discountType=='flat'">Discount Amount &#8377; :</label>
-                        <label for="message-text" class="col-form-label" *ngIf="this.discountType=='percentage'">Discount Percentage % :</label>
-                        <input type="text" class="form-control" [(ngModel)]="discountFlat">
-                    </div>
-                    <!-- <div class="form-group">
-                        <label for="message-text" class="col-form-label">Discount Percentage % :</label>
-                        <input type="text" class="form-control" [(ngModel)]="discountPercentage">
-                    </div> -->
-                    <label class="col-form-label">Minimum Purchase Requirements</label>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="inputEmail4" class="col-form-label">Minimum Amount</label>
-                            <input type="text" class="form-control" [(ngModel)]="miniAmount">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="inputPassword4" class="col-form-label">Minimum Quantity</label>
-                            <input type="text" class="form-control" [(ngModel)]="miniQuantity">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleFormControlSelect1">Offer For</label>
-                        <select class="form-control" [(ngModel)]="offerFor">
-                            <option value="ALL">All</option>
-                            <option value="products">Products</option>
-                            <option value="users">Customers</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">Usage Limit:</label>
-                        <input type="text" class="form-control" [(ngModel)]="usageLimit">
-                    </div>
-                    <!-- <div id="date-picker-example" class="md-form md-outline input-with-post-icon datepicker"> -->
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">Start Date:</label>
-                        <input placeholder="Select date" type="date" class="form-control" [(ngModel)]="startDate">
-                        <!-- <i class="fas fa-calendar input-prefix" tabindex=0></i> -->
-                    </div>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">End Date:</label>
-                        <input placeholder="Select date" type="date" class="form-control" [(ngModel)]="endDate">
-                        <!-- <i class="fas fa-calendar input-prefix" tabindex=0></i> -->
-                    </div>
-                    <!-- </div> -->
-                    <!-- </form> -->
+                <!-- <div id="date-picker-example" class="md-form md-outline input-with-post-icon datepicker"> -->
+                <div class="form-group">
+                    <label for="message-text" class="col-form-label">Start Date:</label>
+                    <input placeholder="Select date" type="date" class="form-control" [(ngModel)]="startDate">
+                    <!-- <i class="fas fa-calendar input-prefix" tabindex=0></i> -->
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="addCoupon()">Add Coupon</button>
+                <div class="form-group">
+                    <label for="message-text" class="col-form-label">End Date:</label>
+                    <input placeholder="Select date" type="date" class="form-control" [(ngModel)]="endDate">
+                    <!-- <i class="fas fa-calendar input-prefix" tabindex=0></i> -->
                 </div>
+                <!-- </div> -->
+                <!-- </form> -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="addCoupon()" *ngIf="showAdd">Add
+                    Coupon</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="editCoupon()" *ngIf="showEdit">Edit
+                    Coupon</button>
             </div>
         </div>
+
+        <div class="modal-content" *ngIf="showDeactivateCoupon">
+            <div class="dltmodal-content animate modal-body dltBl mb-3" style="text-align:center;">
+                <p>Do you want to Deactivate the Coupon ?</p>
+                <button type="submit" class="btn btn-success" (click)="ok()" style="width: 20%;">Yes</button>
+                <button type="submit" class="btn btn-danger" (click)="onCloseHandled()" style="width: 20%;margin-left: 0.3em;">No</button><br><br>
+                <!-- <p class="error" *ngIf="showError">{{ErrorMsg}}</p> -->
+            </div>
+        </div>
+
+        <div class="modal-content" *ngIf="showReactivateCoupon">
+            <div class="dltmodal-content animate modal-body dltBl mb-3" style="text-align:center;">
+                <p>Do you want to Reactivate the Coupon ?</p>
+                <button type="submit" class="btn btn-success" (click)="ok()" style="width: 20%;">Yes</button>
+                <button type="submit" class="btn btn-danger" (click)="onCloseHandled()" style="width: 20%;margin-left: 0.3em;">No</button><br><br>
+                <!-- <p class="error" *ngIf="showError">{{ErrorMsg}}</p> -->
+            </div>
+        </div>
+
     </div>
 
 </div>

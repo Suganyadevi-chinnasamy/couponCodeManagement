@@ -52,7 +52,7 @@ export class SignupComponent implements OnInit {
         console.log("registration resp", resp);
         // this.spinner.hide();
         if (resp.status_code == "200") {
-          this.router.navigate(["/home"]);
+          this.router.navigate(["/login"]);
           this.globalservice.showSuccess("User Registered Successfully");
           // console.log(resp);
           // this.spinner.hide();

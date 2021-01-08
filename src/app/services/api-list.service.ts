@@ -69,8 +69,17 @@ export class ApiListService {
     'key': 'couponforUsers',
     'path': 'allusercoupon',
     'method': 'GET'
+  },
+  {
+    'key': 'addcategory',
+    'path': 'category',
+    'method': 'POST'
+  },
+  {
+    'key': 'getCategory',
+    'path': 'category',
+    'method': 'GET'
   }
-  
 ]
 
   constructor() { }

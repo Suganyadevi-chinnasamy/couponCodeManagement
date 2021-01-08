@@ -16,6 +16,8 @@ export class LoginComponent implements OnInit {
   emailId: any;
   password: any;
   userDetails: any;
+  showLogin = true;
+  showSignup = false;
 
   constructor(
     public router: Router,
@@ -63,8 +65,13 @@ export class LoginComponent implements OnInit {
   }
 
   signUp(){
-    this.router.navigate(['/signup']);
+    this.showSignup = true;
+    this.showLogin = false;
   }
 
+  signIn(){
+    this.showSignup = false;
+    this.showLogin = true;
+  }
 
 }

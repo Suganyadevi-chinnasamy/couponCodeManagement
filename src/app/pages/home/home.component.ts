@@ -15,7 +15,7 @@ import { GlobalService } from 'src/app/services/global.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  display: any = "none";
+  public display = "none";
   storeName: any;
   storeAddress: any;
   storePhoneNumber: any;
@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
   discountFlat: any;
   usageLimit: any;
   couponName: any;
-  discountType: any = 'flat';
+  discountType: any;
   miniAmount: any;
   miniQuantity: any;
   startDate: any;
@@ -40,7 +40,14 @@ export class HomeComponent implements OnInit {
   offerFor: any;
   allAddedCoupon: any = [];
   addedWholeStore: any = [];
-
+  couponCode: any;
+  showDeactivateCoupon = false;
+  showAddCoupon = false;
+  showReactivateCoupon = false;
+  showAdd = false;
+  showEdit = false;
+  showAddStore = false;
+  selStoreID: any;
   // @ViewChild(BsDatepickerDirective, { static: false }) datepicker: BsDatepickerDirective;
 
   constructor(
@@ -101,18 +108,18 @@ export class HomeComponent implements OnInit {
   }
 
   getCouponDetails(){
-    this.commonservice.getMethod(`store?user_id=${this.storeUserid}`, '')
+    console.log("storeUserid", this.storeUserid);
+    this.commonservice.getMethod(`storedetails?user_id=${this.storeUserid}`, '')
       .then((resp: any) => {
         // console.log("Store Details resp", resp);
         this.spinner.hide();
         if (resp.status_code == "200") {
           this.storeDetails = resp.data;
-          // console.log("id", this.storeDetails);
+          console.log("id", this.storeDetails);
           this.storeId = this.storeDetails[0].id;
           this.getStoreCoupon(this.storeId);
           this.spinner.hide();
           // this.globalService.showSuccess(" Added Successfully");
-          // this.display = "none";
           // this.studentForm.reset();
         }else if(resp.status_code == "400"){
           this.spinner.hide();
@@ -168,7 +175,65 @@ export class HomeComponent implements OnInit {
 
   addStore(){
     this.display = "block";
+    this.showAddStore = true;
+    this.showAddCoupon = false;
+    // this.showAdd = false;
+    // this.showEdit = false;
+    this.showDeactivateCoupon = false;
+    this.showReactivateCoupon = false;
     // console.log("this.storeDetails", this.storeDetails);
+  }
+
+  addCouponModal(){
+    this.display = "block";
+    this.showAddCoupon = true;
+    this.showAddStore = false;
+    this.showAdd = true;
+    this.showEdit = false;
+    this.showDeactivateCoupon = false;
+    this.showReactivateCoupon = false;
+  }
+
+  editCouponModal(data){
+    console.log("data", data);
+    this.display = "block";
+    this.showAddCoupon = true;
+    this.showAddStore = false;
+    this.showAdd = false;
+    this.showEdit = true;
+    this.showDeactivateCoupon = false;
+    this.showReactivateCoupon = false;
+
+    this.couponName = data.coupon_name;
+    this.discountType = data.discount_type;
+    this.discountFlat = data.discount_amount;
+    this.miniAmount = data.minimum_amount;
+    this.miniQuantity = data.minimum_quantity;
+    this.usageLimit = data.usage_limits;
+    this.startDate = data.val_start_date;
+    this.endDate = data.val_end_date;
+    this.offerFor = data.type;
+    this.couponCode = data.coupon_code;
+  }
+
+  deactivateCouponModal(){
+    this.display = "block";
+    this.showDeactivateCoupon = true;
+    this.showAddStore = false;
+    this.showAddCoupon = false;
+    this.showReactivateCoupon = false;
+  }
+
+  reactivateCouponModal(){
+    this.display = "block";
+    this.showReactivateCoupon = true;
+    this.showAddStore = false;
+    this.showDeactivateCoupon = false;
+    this.showAddCoupon = false;
+  }
+
+  onCloseHandled(){
+    this.display = "none";
   }
 
   addNewStore(){
@@ -224,6 +289,7 @@ export class HomeComponent implements OnInit {
       "val_end_date" : this.endDate,
       // "percentage" : this.discountPercentage,
       "type" : this.offerFor, 
+      "store_id": this.selStoreID
     }
 
     console.log("payload", payload);
@@ -241,6 +307,20 @@ export class HomeComponent implements OnInit {
           this.globalService.showError(resp.data);
         }
       });
+  }
+
+  generateCoupon(){
+    const servicePath = this.utils.getApiConfigs('');
+    this.commonservice.invokeService(servicePath[0].method, servicePath[0].path, '')
+      .then((resp: any) => {
+        // console.log("Coupon details", resp);
+        this.spinner.hide();
+        if (resp.status_code == "200") {
+        }else if(resp.status_code == "400"){
+          this.globalService.showError(resp.data);
+          // console.log("data", resp.data);
+        }
+      }) 
   }
 
   dateFormat(date) {

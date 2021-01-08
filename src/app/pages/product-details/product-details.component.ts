@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiListService } from 'src/app/services/api-list.service';
 import { CommonService } from 'src/app/services/common.service';
-import { of } from 'rxjs';
 import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
@@ -24,6 +23,9 @@ export class ProductDetailsComponent implements OnInit {
   proPrice: any;
   proQuantity: any;
   couponforPro: any;
+  category: any;
+  categoryDetails: any;
+  storeIdData: any;
 
   constructor(
     public utils: ApiListService,
@@ -33,21 +35,43 @@ export class ProductDetailsComponent implements OnInit {
     let user = JSON.parse(localStorage.getItem('storeUserDetails'));
     this.userData = JSON.parse(user);
     this.storeUserid = this.userData[0].user_id;
+    this.storeIdData = this.userData[0].id;
   }
 
   ngOnInit(): void {
+    this.getStoreDetails();
     this.getProductDetails();
     this.getCouponforProduct();
-    this.getStoreDetails();
+    this.getCategory();
+  }
+
+  onChange(data){
+    console.log("data", data);
+    this.storeIdData = data;
+    this.getProductDetails();
   }
 
   getProductDetails() {
-    const servicePath = this.utils.getApiConfigs('productDetails');
-    this.commonservice.invokeService(servicePath[0].method, servicePath[0].path, '')
+    console.log("storeIdData", this.storeIdData);
+    // const servicePath = this.utils.getApiConfigs('productDetails');
+    this.commonservice.getMethod(`store?user_id=${this.storeUserid}&store_id=${this.storeIdData}`, '')
       .then((resp: any) => {
-        // console.log("product details", resp);
+        console.log("product details", resp);
         if (resp.status_code == "200") {
           this.productData = resp.data;
+        } else if (resp.status_code == "400") {
+          this.globalService.showError(resp.data);
+        }
+      });
+  }
+
+  getCategory(){
+    const servicePath = this.utils.getApiConfigs('getCategory');
+    this.commonservice.invokeService(servicePath[0].method, servicePath[0].path, '')
+      .then((resp: any) => {
+        console.log("Category details", resp);
+        if (resp.status_code == "200") {
+          this.categoryDetails = resp.data;
         } else if (resp.status_code == "400") {
           this.globalService.showError(resp.data);
         }
@@ -81,7 +105,7 @@ export class ProductDetailsComponent implements OnInit {
         // this.spinner.hide();
         if (resp.status_code == "200") {
           this.couponDetails = resp.data;
-          console.log("coupon details", this.couponDetails);
+          // console.log("coupon details", this.couponDetails);
         } else if (resp.status_code == "400") {
           // this.spinner.hide();
           this.globalService.showError(resp.data);
@@ -91,7 +115,7 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   getStoreDetails() {
-    this.commonservice.getMethod(`store?user_id=${this.storeUserid}`, '')
+    this.commonservice.getMethod(`storedetails?user_id=${this.storeUserid}`, '')
       .then((resp: any) => {
         // console.log("Store Details resp", resp);
         // this.spinner.hide();
@@ -116,7 +140,7 @@ export class ProductDetailsComponent implements OnInit {
     const servicePath = this.utils.getApiConfigs('addcouponprod');
     this.commonservice.invokeService(servicePath[0].method, servicePath[0].path, payload)
       .then((resp: any) => {
-        console.log("product details", resp);
+        // console.log("product details", resp);
         if (resp.status_code == "200") {
           this.productData = resp.data;
           this.globalService.showSuccess("Coupon mapped successfully");
@@ -155,6 +179,25 @@ export class ProductDetailsComponent implements OnInit {
     this.display = "none";
   }
 
+  addCategory(){
+    
+    let payload = {
+      "category_type": this.category
+    }
+
+    console.log("payload", payload);
+    const servicePath = this.utils.getApiConfigs('addcategory');
+    this.commonservice.invokeService(servicePath[0].method, servicePath[0].path, payload)
+      .then((resp: any) => {
+        console.log("Added product details", resp);
+        if (resp.status_code == "200") {
+          this.productData.push(resp.data);
+          this.globalService.showSuccess("Category added successfully");
+        } else if (resp.status_code == "400") {
+          this.globalService.showError(resp.data);
+        }
+    });
+  }
 
 
 }
